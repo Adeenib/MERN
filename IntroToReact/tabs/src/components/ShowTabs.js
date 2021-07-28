@@ -21,7 +21,7 @@ const ShowTabs = (props) => {
         // }
         // e.target.style.backgroundColor = "black"
         // e.target.style.color = "white"
-        console.log(e.target.style)
+        console.log(e)
 
 
     }

@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Show = (props) => {
-    const { variable, color, backgroundColor } = props;
+const Show = ({ variable, color, backgroundColor }) => {
+    // const { variable, color, backgroundColor } = props;
     return (
         <h1 style={{ color: color, backgroundColor: backgroundColor }}>
             {isNaN(variable) ?
