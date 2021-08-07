@@ -20,6 +20,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import { navigate } from '@reach/router'
+
 
 // function createData(name, calories, fat, carbs, protein) {
 //     return { name, calories, fat, carbs, protein };
@@ -219,13 +221,17 @@ export default function EnhancedTable(props) {
 
 
     const handleDelete = () => {
-        selected.map((value, index) => {
-            DeleteHandle(value)
+        // eslint-disable-next-line array-callback-return
+        for (var i = 0; i < selected.length; i++) {
+            DeleteHandle(selected[i])
+        }
+        // selected.map((value, index) => {
+        //     DeleteHandle(value)
 
 
-        })
+        // })
         setSelected([])
-
+        navigate('/delete')
 
 
     }
@@ -352,7 +358,7 @@ export default function EnhancedTable(props) {
                                                 )}
                                                 </>
                                                 {/* her To Add Your Action  */}
-                                                <TableCell value={row._id} name={row._id} abbr={row._id} key={row._id}>
+                                                <TableCell abbr={row._id} key={row._id}>
                                                     {props.children}
                                                 </TableCell>
 

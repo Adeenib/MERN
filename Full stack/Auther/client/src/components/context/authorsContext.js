@@ -18,7 +18,7 @@ export const AuthorsProvider = props => {
                 setLaoded(true))
 
 
-    }, [setAuthors])
+    }, [routes])
 
     return (
 

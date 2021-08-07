@@ -34,7 +34,9 @@ const AddNew = () => {
     navigate('/new')
 }
 
-export default function DenseAppBar() {
+export default function DenseAppBar(props) {
+
+
     const classes = useStyles();
 
     return (

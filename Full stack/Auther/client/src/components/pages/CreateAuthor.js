@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react'
-import { useState, useContext } from 'react';
+import React from 'react'
+import { useState, useContext, useEffect } from 'react';
 import TheBlueButton from '../basic/TheBlueButton';
 import TheRedButton from '../basic/TheRedButton';
 import TheInput from '../basic/TheInput';
 import axios from 'axios'
-import { AuthorsContext } from '../context/authorsContext'
 import Box from '../basic/box';
 import { RoutesContext } from '../context/RoutesContext'
 import { navigate } from '@reach/router'
@@ -16,12 +15,20 @@ const useStyles = makeStyles((theme) => ({
     }
 
 }));
-function CreateAuthor() {
+function CreateAuthor(props) {
     const [author, setAuthor] = useState()
-    const [authors, setAuthors] = useContext(AuthorsContext)
     const [NameErr, setNameErr] = useState("")
+    const [notFoundId, setNotFoundId] = useState(false);
     const [routes, setRoutes] = useContext(RoutesContext)
+    const classes = useStyles();
+    useEffect(() => {
+        if (props.id) {
+            axios.get(routes.Find + props.id)
+                .then(res => setAuthor(res.data.name))
+                .catch(err => setNotFoundId(true));
+        }
 
+    }, [props.id])
 
 
     const handleChange = e => {
@@ -37,18 +44,26 @@ function CreateAuthor() {
     }
 
     const handelSubmit = () => {
+        if (!props.id) {
 
-        axios.post(routes.Create, { name: author })
-            .then(res => {
-                setAuthors([...authors, res.data])
-                setAuthor("")
-            })
-            .catch(err => {
-                setNameErr(err.response.data.error.errors.name.message)
+            axios.post(routes.Create, { name: author })
+                .then(res => {
+                    setAuthor("")
+                })
+                .catch(err => {
+                    setNameErr(err.response.data.error.errors.name.message)
 
 
-            })
+                })
+        } else {
+            axios.put(routes.Edit + props.id, { name: author })
+                .then(author => navigate("/"))
+                .catch(err => {
+                    setNameErr(err.response.data.error.errors.name.message);
+                });
 
+
+        }
 
     }
 
@@ -59,7 +74,7 @@ function CreateAuthor() {
 
             <Box Header='Add New Author'>
                 < TheInput label='Name' value={author} handleChange={handleChange} err={NameErr} />
-                <div>
+                <div className={classes.buttonBox}>
                     < TheBlueButton value="Submit" handleOnClick={handelSubmit} />
                     < TheRedButton value="cancel" handleOnClick={() => navigate('/')} color='secondary' />
                 </div>

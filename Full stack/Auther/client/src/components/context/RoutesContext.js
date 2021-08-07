@@ -9,7 +9,8 @@ export const RoutesProvider = props => {
         'GetAll': "http://localhost:8000/api/author/",
         'Delete': 'http://localhost:8000/api/author/delete/',
         'edit': '/edit',
-        'Edit': 'http://localhost:8000/api/author/update/'
+        'Edit': 'http://localhost:8000/api/author/update/',
+        'Find': 'http://localhost:8000/api/author/'
 
 
     })

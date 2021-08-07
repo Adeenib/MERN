@@ -1,6 +1,5 @@
 import CreateAuthor from './components/pages/CreateAuthor'
-import { AuthorsProvider } from './components/context/authorsContext'
-import { Router } from '@reach/router'
+import { Redirect, Router } from '@reach/router'
 import NavBar from './components/basic/NavBar/NavBar'
 import { RoutesProvider } from './components/context/RoutesContext'
 import RenderAuthor from './components/pages/RenderAuthor'
@@ -16,13 +15,15 @@ function App() {
     <RoutesProvider>
       <div className="App">
         <NavBar />
-        <AuthorsProvider >
-          <Router>
-            <RenderAuthor exact path='/' />
-            <CreateAuthor path='/new' header="Add New Author" />
 
-          </Router>
-        </AuthorsProvider>
+        <Router>
+          <Redirect from='/delete' to='/' />
+          <RenderAuthor path='/' />
+          <CreateAuthor path='/new' header="Add New Author" />
+          <CreateAuthor path='/edit/:id' header="Edit Author" />
+
+        </Router>
+
 
       </div>
     </RoutesProvider>
