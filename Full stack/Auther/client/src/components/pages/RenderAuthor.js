@@ -8,10 +8,18 @@ import CreateAuthor from './CreateAuthor'
 import TheBlueButton from '../basic/TheBlueButton'
 import { navigate } from '@reach/router'
 
-
 function RenderAuthor() {
     const [routes, setRoutes] = useContext(RoutesContext)
     const [authors, setAuthors] = useContext(AuthorsContext)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    let copyAuthors = { ...authors }
+    useEffect(() => {
+        setAuthors(copyAuthors)
+    }, [copyAuthors])
+
+
+
+
     const DeleteHandle = (id) => {
         axios.delete(routes.Delete + id)
             .then(res => {
@@ -19,6 +27,8 @@ function RenderAuthor() {
 
             })
     }
+
+
 
     // (e) => console.log(e.target.parentElement.abbr)
     const NavigateHandle = (e) => {
